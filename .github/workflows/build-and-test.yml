@@ -8,14 +8,14 @@ jobs:
     strategy:
       matrix:
         target: [android, ios]
-    runs-on: macos-latest
+    runs-on: [self-hosted, macos]
     steps:
       - uses: actions/checkout@v3
       - uses: nickcharlton/react-native-setup@main
       - run: yarn build-${{ matrix.target }}
 
   lint:
-    runs-on: macos-latest
+    runs-on: [self-hosted, macos]
     needs: build
     steps:
       - uses: actions/checkout@v3
@@ -23,7 +23,7 @@ jobs:
       - run: yarn lint
 
   test:
-    runs-on: macos-latest
+    runs-on: [self-hosted, macos]
     needs: build
     steps:
       - uses: actions/checkout@v3
