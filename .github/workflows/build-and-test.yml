@@ -1,0 +1,31 @@
+---
+name: Build, Test & Lint
+on:
+  push:
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        target: [android, ios]
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: nickcharlton/react-native-setup@main
+      - run: yarn build-${{ matrix.target }}
+
+  lint:
+    runs-on: macos-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v3
+      - uses: nickcharlton/react-native-setup@main
+      - run: yarn lint
+
+  test:
+    runs-on: macos-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v3
+      - uses: nickcharlton/react-native-setup@main
+      - run: yarn test
